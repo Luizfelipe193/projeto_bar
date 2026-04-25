@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bar do Pastel</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:#fff;
+}
+
+header{
+padding:20px;
+text-align:center;
+background:#111;
+border-bottom:2px solid #ff9800;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+header img{
+width:180px;
+max-width:90%;
+}
+
+.hero{
+padding:30px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:2.2rem;
+color:#ff9800;
+margin-bottom:10px;
+}
+
+.hero p{
+color:#ccc;
+margin-bottom:20px;
+}
+
+.btn-main{
+background:#ff9800;
+color:#111;
+padding:15px 30px;
+border:none;
+border-radius:12px;
+font-size:1rem;
+font-weight:bold;
+cursor:pointer;
+width:100%;
+margin-bottom:10px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+h2{
+color:#ff9800;
+margin:35px 0 15px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:15px;
+}
+
+.card{
+background:#1a1a1a;
+padding:18px;
+border-radius:16px;
+box-shadow:0 0 10px rgba(0,0,0,.4);
+}
+
+.price{
+color:#ff9800;
+font-size:1.1rem;
+font-weight:bold;
+margin:10px 0;
+}
+
+.card button{
+width:100%;
+padding:12px;
+border:none;
+background:#ff9800;
+color:#111;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
+}
+
+.cart-btn{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#ff9800;
+color:#111;
+padding:16px;
+border-radius:50%;
+font-size:22px;
+cursor:pointer;
+font-weight:bold;
+z-index:999;
+}
+
+.cart-count{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:#fff;
+width:22px;
+height:22px;
+font-size:12px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.cart{
+position:fixed;
+right:-400px;
+top:0;
+width:350px;
+max-width:100%;
+height:100%;
+background:#151515;
+padding:20px;
+transition:.3s;
+overflow:auto;
+z-index:9999;
+}
+
+.cart.open{
+right:0;
+}
+
+.cart-item{
+border-bottom:1px solid #333;
+padding:10px 0;
+}
+
+.cart-total{
+font-size:1.2rem;
+margin:15px 0;
+color:#ff9800;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+background:#222;
+color:#fff;
+}
+
+.checkout-btn{
+width:100%;
+padding:14px;
+background:#25d366;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.close-btn{
+background:red;
+padding:8px 12px;
+border:none;
+color:#fff;
+border-radius:8px;
+margin-bottom:15px;
+cursor:pointer;
+}
+
+footer{
+padding:30px;
+text-align:center;
+color:#aaa;
+margin-top:40px;
+}
+
+@media(max-width:768px){
+.cart{
+width:100%;
+right:-100%;
+}
+
+.hero h1{
+font-size:1.7rem;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<img src="img/logo.png">
+</header>
+
+<section class="hero">
+<h1>Mais de 50 Sabores</h1>
+<p>Escolha seu pastel favorito e peça agora.</p>
+<button class="btn-main" onclick="abrirCardapio()">Fazer Pedido</button>
+</section>
+
+<!-- SUBSTITUA APENAS A DIV class="container" PELO BLOCO ABAIXO -->
+
+<div class="container">
+
+<h2>Pastéis Tradicionais</h2>
+<div class="grid">
+
+<div class="card"><h3>Carne</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Carne',14)">Adicionar</button></div>
+<div class="card"><h3>Coalho</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Coalho',14)">Adicionar</button></div>
+<div class="card"><h3>Cheddar</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Cheddar',14)">Adicionar</button></div>
+<div class="card"><h3>Frango</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Frango',14)">Adicionar</button></div>
+<div class="card"><h3>Presunto</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Presunto',14)">Adicionar</button></div>
+<div class="card"><h3>Calabresa</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Calabresa',14)">Adicionar</button></div>
+<div class="card"><h3>Catupiry</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Catupiry',14)">Adicionar</button></div>
+<div class="card"><h3>Queijo</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Queijo',14)">Adicionar</button></div>
+
+</div>
+
+<h2>Pastéis Dois Sabores</h2>
+<div class="grid">
+
+<div class="card"><h3>Frango + Catupiry</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Catupiry',15)">Adicionar</button></div>
+<div class="card"><h3>Frango + Cheddar</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Cheddar',15)">Adicionar</button></div>
+<div class="card"><h3>Frango + Milho</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Milho',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Bacon</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Bacon',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Cebola</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Cebola',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Azeitona</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Azeitona',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Ovo</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Ovo',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Queijo</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Queijo',15)">Adicionar</button></div>
+<div class="card"><h3>Pizza</h3><div class="price">R$ 15,00</div><button onclick="addItem('Pizza',15)">Adicionar</button></div>
+<div class="card"><h3>Atum</h3><div class="price">R$ 15,00</div><button onclick="addItem('Atum',15)">Adicionar</button></div>
+
+</div>
+
+<h2>Pastéis Especiais</h2>
+<div class="grid">
+
+<div class="card"><h3>Montanha</h3><p>Carne, ovo, cebola e azeitona</p><div class="price">R$ 16,00</div><button onclick="addItem('Montanha',16)">Adicionar</button></div>
+<div class="card"><h3>Quatro Queijos</h3><div class="price">R$ 16,00</div><button onclick="addItem('Quatro Queijos',16)">Adicionar</button></div>
+<div class="card"><h3>Du Zé</h3><div class="price">R$ 16,00</div><button onclick="addItem('Du Zé',16)">Adicionar</button></div>
+<div class="card"><h3>Tricolor</h3><div class="price">R$ 16,00</div><button onclick="addItem('Tricolor',16)">Adicionar</button></div>
+<div class="card"><h3>Bomba</h3><div class="price">R$ 16,00</div><button onclick="addItem('Bomba',16)">Adicionar</button></div>
+<div class="card"><h3>Camarão Especial</h3><div class="price">R$ 20,00</div><button onclick="addItem('Camarão Especial',20)">Adicionar</button></div>
+<div class="card"><h3>Disco Voador</h3><div class="price">R$ 27,00</div><button onclick="addItem('Disco Voador',27)">Adicionar</button></div>
+
+</div>
+
+<h2>Pastéis Doces</h2>
+<div class="grid">
+
+<div class="card"><h3>Doce de Leite</h3><div class="price">R$ 14,00</div><button onclick="addItem('Doce de Leite',14)">Adicionar</button></div>
+<div class="card"><h3>Banana</h3><div class="price">R$ 14,00</div><button onclick="addItem('Banana',14)">Adicionar</button></div>
+<div class="card"><h3>Chocolate + Queijo</h3><div class="price">R$ 15,00</div><button onclick="addItem('Chocolate + Queijo',15)">Adicionar</button></div>
+<div class="card"><h3>Chocolate</h3><div class="price">R$ 15,00</div><button onclick="addItem('Chocolate',15)">Adicionar</button></div>
+<div class="card"><h3>Prestígio</h3><div class="price">R$ 15,00</div><button onclick="addItem('Prestígio',15)">Adicionar</button></div>
+
+</div>
+
+<h2>Petiscos</h2>
+<div class="grid">
+
+<div class="card"><h3>Batata Frita</h3><div class="price">R$ 22,00</div><button onclick="addItem('Batata Frita',22)">Adicionar</button></div>
+<div class="card"><h3>Ovos de Codorna</h3><div class="price">R$ 10,00</div><button onclick="addItem('Ovos de Codorna',10)">Adicionar</button></div>
+<div class="card"><h3>Carne de Sol + Fritas</h3><div class="price">R$ 55,00</div><button onclick="addItem('Carne de Sol + Fritas',55)">Adicionar</button></div>
+<div class="card"><h3>Calabresa + Fritas</h3><div class="price">R$ 50,00</div><button onclick="addItem('Calabresa + Fritas',50)">Adicionar</button></div>
+<div class="card"><h3>Filé com Fritas</h3><div class="price">R$ 60,00</div><button onclick="addItem('Filé com Fritas',60)">Adicionar</button></div>
+<div class="card"><h3>Frango à Passarinho</h3><div class="price">R$ 45,00</div><button onclick="addItem('Frango à Passarinho',45)">Adicionar</button></div>
+
+</div>
+
+<h2>Massas</h2>
+<div class="grid">
+
+<div class="card"><h3>Lasanha Carne P</h3><div class="price">R$ 45,00</div><button onclick="addItem('Lasanha Carne P',45)">Adicionar</button></div>
+<div class="card"><h3>Lasanha Carne M</h3><div class="price">R$ 55,00</div><button onclick="addItem('Lasanha Carne M',55)">Adicionar</button></div>
+<div class="card"><h3>Lasanha Frango P</h3><div class="price">R$ 45,00</div><button onclick="addItem('Lasanha Frango P',45)">Adicionar</button></div>
+<div class="card"><h3>Lasanha Frango M</h3><div class="price">R$ 55,00</div><button onclick="addItem('Lasanha Frango M',55)">Adicionar</button></div>
+
+</div>
+
+<h2>Parmegiana</h2>
+<div class="grid">
+
+<div class="card"><h3>Parmegiana P</h3><div class="price">R$ 45,00</div><button onclick="addItem('Parmegiana P',45)">Adicionar</button></div>
+<div class="card"><h3>Parmegiana M</h3><div class="price">R$ 55,00</div><button onclick="addItem('Parmegiana M',55)">Adicionar</button></div>
+<div class="card"><h3>Parmegiana G</h3><div class="price">R$ 100,00</div><button onclick="addItem('Parmegiana G',100)">Adicionar</button></div>
+
+</div>
+
+<h2>Bebidas</h2>
+<div class="grid">
+
+<div class="card"><h3>Refrigerante Lata</h3><div class="price">R$ 7,00</div><button onclick="addItem('Refrigerante Lata',7)">Adicionar</button></div>
+<div class="card"><h3>Refrigerante 600ml</h3><div class="price">R$ 9,00</div><button onclick="addItem('Refrigerante 600ml',9)">Adicionar</button></div>
+<div class="card"><h3>Refrigerante 1L</h3><div class="price">R$ 12,00</div><button onclick="addItem('Refrigerante 1L',12)">Adicionar</button></div>
+<div class="card"><h3>Água Mineral</h3><div class="price">R$ 4,00</div><button onclick="addItem('Água Mineral',4)">Adicionar</button></div>
+<div class="card"><h3>Red Bull</h3><div class="price">R$ 14,00</div><button onclick="addItem('Red Bull',14)">Adicionar</button></div>
+
+</div>
+
+</div>
+
+<div class="cart-btn" onclick="toggleCart()">
+🛒
+<div class="cart-count" id="count">0</div>
+</div>
+
+<div class="cart" id="cart">
+
+<button class="close-btn" onclick="toggleCart()">Fechar</button>
+
+<h2>Seu Pedido</h2>
+
+<div id="items"></div>
+
+<div class="cart-total" id="total">Total: R$ 0,00</div>
+
+<div id="acoesCarrinho">
+<button class="btn-main" onclick="toggleCart()">Continuar Comprando</button>
+<button class="checkout-btn" onclick="abrirCheckout()">Fechar Pedido</button>
+</div>
+
+<div id="checkoutBox" style="display:none;">
+
+<input type="text" id="nome" placeholder="Seu nome">
+<input type="text" id="fone" placeholder="Telefone">
+
+<select id="tipo" onchange="showEndereco()">
+<option value="Retirada">Retirada</option>
+<option value="Delivery">Delivery</option>
+</select>
+
+<div id="enderecoBox" style="display:none;">
+<input type="text" id="endereco" placeholder="Seu endereço">
+</div>
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+</select>
+
+<button class="checkout-btn" onclick="enviarPedido()">Enviar no WhatsApp</button>
+
+</div>
+
+</div>
+
+<footer>
+WhatsApp: (84) 98741-5810<br>
+Natal - RN
+</footer>
+
+<script>
+
+let cart=[];
+
+function abrirCardapio(){
+document.querySelector(".container").scrollIntoView({
+behavior:"smooth"
+});
+}
+
+function addItem(nome,preco){
+
+let item = cart.find(p=>p.nome===nome);
+
+if(item){
+item.qtd++;
+}else{
+cart.push({nome,preco,qtd:1});
+}
+
+renderCart();
+
+document.getElementById("checkoutBox").style.display="none";
+document.getElementById("acoesCarrinho").style.display="block";
+document.getElementById("cart").classList.add("open");
+
+}
+
+function renderCart(){
+
+let html='';
+let total=0;
+let qtd=0;
+
+cart.forEach(item=>{
+
+let sub=item.preco*item.qtd;
+total+=sub;
+qtd+=item.qtd;
+
+html+=`
+<div class="cart-item">
+${item.nome}<br>
+${item.qtd}x - R$ ${sub.toFixed(2)}
+</div>
+`;
+
+});
+
+document.getElementById("items").innerHTML=html;
+document.getElementById("total").innerHTML="Total: R$ "+total.toFixed(2);
+document.getElementById("count").innerHTML=qtd;
+
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("open");
+}
+
+function abrirCheckout(){
+
+if(cart.length==0){
+alert("Adicione produtos primeiro.");
+return;
+}
+
+document.getElementById("acoesCarrinho").style.display="none";
+document.getElementById("checkoutBox").style.display="block";
+
+}
+
+function showEndereco(){
+
+let tipo=document.getElementById("tipo").value;
+
+document.getElementById("enderecoBox").style.display =
+tipo=="Delivery" ? "block":"none";
+
+}
+
+function enviarPedido(){
+
+let nome=document.getElementById("nome").value;
+let fone=document.getElementById("fone").value;
+let tipo=document.getElementById("tipo").value;
+let endereco=document.getElementById("endereco").value;
+let pagamento=document.getElementById("pagamento").value;
+
+let total=0;
+
+let data = new Date().toLocaleDateString('pt-BR');
+let hora = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+let mensagem=`Pedido Bar do Pastel
+
+Data: ${data}
+Hora: ${hora}
+
+Tipo de serviço: ${tipo}
+
+Nome: ${nome}
+Telefone: ${fone}
+`;
+
+if(tipo=="Delivery"){
+mensagem+=`
+Endereço: ${endereco}
+Taxa de entrega: A confirmar
+`;
+}
+
+mensagem+=`
+Produtos:
+`;
+
+cart.forEach(item=>{
+
+let sub=item.preco*item.qtd;
+total+=sub;
+
+mensagem+=`${item.nome} x${item.qtd} - R$ ${sub.toFixed(2)}
+`;
+
+});
+
+mensagem+=`
+Total: R$ ${total.toFixed(2)}
+
+Pagamento: ${pagamento}
+`;
+
+let url="https://wa.me/5584987415810?text="+encodeURIComponent(mensagem);
+
+window.open(url,'_blank');
+
+}
+
+</script>
+
+</body>
+</html>
