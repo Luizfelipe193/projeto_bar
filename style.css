@@ -212,3 +212,37 @@ width:100%;
 right:-100%;
 }
 }
+
+
+.cart-item{
+border-bottom:1px solid #333;
+padding:10px 0;
+}
+
+.cart-item button{
+margin:5px;
+padding:5px 10px;
+border-radius:8px;
+background:#ff9800;
+color:#111;
+}
+
+
+
+.status-loja{
+margin-top:10px;
+padding:10px;
+border-radius:10px;
+font-weight:bold;
+text-align:center;
+}
+
+.aberto{
+background:#1e7e34;
+color:#fff;
+}
+
+.fechado{
+background:#c82333;
+color:#fff;
+}

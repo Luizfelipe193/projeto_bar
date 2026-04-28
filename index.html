@@ -13,6 +13,7 @@
 <section id="home" class="home">
 
 <img src="img/logo.png" class="logo-home">
+<div id="statusLoja" class="status-loja">Verificando...</div>
 
 <h1>Bem-vindo ao Bar do Pastel</h1>
 <p>Mais de 50 sabores incríveis 🍴</p>
@@ -24,8 +25,13 @@
 <button>💬 WhatsApp</button>
 </a>
 
-<button>📸 Instagram</button>
-<button>📍 Localização</button>
+<a href="https://www.instagram.com/bardopastelnatalrn/" target="_blank" class="btn-main">
+📸 Instagram
+</a>
+
+<a href="https://www.google.com/maps/place/Bar+do+Pastel/@-5.8060237,-35.2232743,17z/data=!3m1!4b1!4m6!3m5!1s0x7b25552fe14e32b:0x6bff9050e1aa65e2!8m2!3d-5.8060237!4d-35.2232743!16s%2Fg%2F1tsyp_8g?entry=ttu&g_ep=EgoyMDI2MDQyNi.0IKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-main">
+📍 Localização
+</a>
 </div>
 
 </section>
@@ -158,8 +164,46 @@
 </select>
 
 <div id="enderecoBox" style="display:none;">
-<select id="bairro"></select>
-<input type="text" id="endereco" placeholder="Rua, número">
+
+<select id="bairro">
+<option value="">Selecione seu bairro</option>
+
+<option>Alecrim</option>
+<option>Bairro Nazaré</option>
+<option>Bairro Nordeste</option>
+<option>Barro Vermelho</option>
+<option>Bom Pastor</option>
+<option>Candelária</option>
+<option>Capim Macio</option>
+<option>Cidade Alta</option>
+<option>Cidade Esperança</option>
+<option>Cidade Nova</option>
+<option>Cidade Satélite</option>
+<option>Dix-Sept Rosado</option>
+<option>Felipe Camarão</option>
+<option>Jardim América</option>
+<option>Lagoa Nova</option>
+<option>Lagoa Seca</option>
+<option>Mãe Luiza</option>
+<option>Neópolis</option>
+<option>Parnamirim</option>
+<option>Petrópolis</option>
+<option>Pitimbu</option>
+<option>Planalto</option>
+<option>Ponta Negra</option>
+<option>Potilândia</option>
+<option>Praia do Meio</option>
+<option>Quintas</option>
+<option>Ribeira</option>
+<option>Rocas</option>
+<option>Tirol</option>
+
+<option>Outro</option>
+</select>
+
+<input type="text" id="endereco" placeholder="Rua, número, complemento">
+<input type="text" id="referencia" placeholder="Ponto de referência (opcional)">
+
 </div>
 
 <select id="pagamento">
@@ -169,8 +213,6 @@
 </select>
 
 <button class="checkout-btn" onclick="enviarPedido()">Enviar no WhatsApp</button>
-
-</div>
 
 </div>
 
