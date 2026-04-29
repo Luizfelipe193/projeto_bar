@@ -222,6 +222,7 @@ let bairro=document.getElementById("bairro").value;
 let endereco=document.getElementById("endereco").value;
 let referencia=document.getElementById("referencia").value;
 let pagamento=document.getElementById("pagamento").value;
+let observacao=document.getElementById("observacao")?.value.trim(); // 👈 NOVO
 
 // VALIDAÇÃO
 if(!nome){ alert("Digite seu nome"); return; }
@@ -247,7 +248,7 @@ hour:'2-digit',
 minute:'2-digit'
 });
 
-// MENSAGEM ORGANIZADA
+// MENSAGEM
 let mensagem=`Pedido Bar do Pastel
 
 Data: ${data}
@@ -294,7 +295,14 @@ mensagem+=`${item.nome} x${item.qtd} - R$ ${sub.toFixed(2)}
 `;
 });
 
-// TOTAL FINAL
+// 👇 OBSERVAÇÃO (SÓ SE TIVER)
+if(observacao){
+mensagem+=`
+Observação: ${observacao}
+`;
+}
+
+// TOTAL
 let total = subtotal + taxa;
 
 mensagem+=`

@@ -2,31 +2,36 @@ body{
 background:#0f0f0f;
 color:#fff;
 font-family:Arial;
+margin:0;
 }
 
-/* HOME */
+/* ===== HOME ===== */
 .home{
-height:100vh;
+min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
+padding:20px;
 }
 
 .logo-home{
-width:140px;
+width:120px;
 margin-bottom:20px;
 }
 
+/* BOTÕES HOME */
 .home-buttons{
 display:flex;
 flex-direction:column;
 gap:12px;
-width:220px;
+width:100%;
+max-width:280px;
 }
 
-.home-buttons button{
+.home-buttons button,
+.home-buttons a{
 padding:14px;
 background:#ff9800;
 border:none;
@@ -34,61 +39,74 @@ border-radius:12px;
 font-weight:bold;
 cursor:pointer;
 transition:.2s;
+text-align:center;
+color:#111;
+text-decoration:none;
 }
 
-.home-buttons button:hover{
+.home-buttons button:hover,
+.home-buttons a:hover{
 background:#ffb84d;
 transform:scale(1.03);
 }
 
-/* CONTAINER */
+/* ===== CONTAINER ===== */
 .container{
+max-width:1100px;
+margin:auto;
 padding:20px;
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px;
 }
 
-/* CARDS */
+/* ===== CARDS ===== */
 .card{
 background:#1a1a1a;
-padding:18px;
-border-radius:16px;
+padding:14px;
+border-radius:14px;
 box-shadow:0 0 12px rgba(0,0,0,0.4);
 transition:.2s;
+text-align:center;
 }
 
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-3px);
 box-shadow:0 0 20px rgba(255,152,0,0.2);
 }
 
-/* PREÇO */
-.price{
-color:#ff9800;
-margin:10px 0;
-font-weight:bold;
+.card h3{
+font-size:14px;
 }
 
-/* BOTÕES GERAIS */
+/* ===== PREÇO ===== */
+.price{
+color:#ff9800;
+margin:8px 0;
+font-weight:bold;
+font-size:15px;
+}
+
+/* ===== BOTÕES ===== */
 button{
 border:none;
-border-radius:12px;
+border-radius:10px;
 font-weight:bold;
 cursor:pointer;
 transition:.2s;
 }
 
-/* BOTÃO ADICIONAR */
+/* BOTÃO CARD */
 .card button{
 width:100%;
-padding:12px;
+padding:10px;
 background:#ff9800;
 color:#111;
+font-size:14px;
 }
 
 .card button:hover{
@@ -102,6 +120,7 @@ color:#111;
 padding:14px;
 width:100%;
 border-radius:12px;
+font-size:15px;
 }
 
 .btn-main:hover{
@@ -115,6 +134,7 @@ color:#fff;
 padding:14px;
 border-radius:12px;
 width:100%;
+font-size:15px;
 }
 
 .checkout-btn:hover{
@@ -134,8 +154,8 @@ margin-bottom:10px;
 background:#ff5c5c;
 }
 
-/* INPUTS */
-input, select{
+/* ===== INPUTS ===== */
+input, select, textarea{
 width:100%;
 padding:12px;
 margin-bottom:10px;
@@ -144,15 +164,15 @@ border-radius:10px;
 background:#222;
 color:#fff;
 outline:none;
+font-size:14px;
 }
 
-/* CARRINHO */
+/* ===== CARRINHO PADRÃO (DESKTOP) ===== */
 .cart{
 position:fixed;
-right:-400px;
+right:-380px;
 top:0;
-width:320px;
-max-width:100%;
+width:350px;
 height:100%;
 background:#111;
 padding:20px;
@@ -166,20 +186,20 @@ box-shadow:-5px 0 20px rgba(0,0,0,0.6);
 right:0;
 }
 
-/* BOTÃO DO CARRINHO */
+/* ===== BOTÃO DO CARRINHO ===== */
 .cart-btn{
 position:fixed;
-bottom:20px;
-right:20px;
+bottom:15px;
+right:15px;
 background:#ff9800;
-padding:16px;
+padding:14px;
 border-radius:50%;
 font-size:20px;
 cursor:pointer;
 z-index:999;
 }
 
-/* CONTADOR */
+/* ===== CONTADOR ===== */
 .cart-count{
 background:red;
 color:#fff;
@@ -191,44 +211,37 @@ top:-5px;
 right:-5px;
 }
 
-/* TOTAL */
+/* ===== TOTAL ===== */
 .cart-total{
-font-size:1.2rem;
+font-size:1.1rem;
 margin:15px 0;
 color:#ff9800;
 font-weight:bold;
 }
 
-/* TÍTULOS */
+/* ===== TITULOS ===== */
 h2{
 color:#ff9800;
-margin:30px 0 15px;
+margin:25px 0 10px;
+font-size:18px;
 }
 
-/* RESPONSIVO */
-@media(max-width:768px){
-.cart{
-width:100%;
-right:-100%;
-}
-}
-
-
+/* ===== ITENS DO CARRINHO ===== */
 .cart-item{
 border-bottom:1px solid #333;
 padding:10px 0;
+font-size:14px;
 }
 
 .cart-item button{
-margin:5px;
-padding:5px 10px;
+margin:4px;
+padding:6px 10px;
 border-radius:8px;
 background:#ff9800;
 color:#111;
 }
 
-
-
+/* ===== STATUS ===== */
 .status-loja{
 margin-top:10px;
 padding:10px;
@@ -245,4 +258,37 @@ color:#fff;
 .fechado{
 background:#c82333;
 color:#fff;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+.cart{
+width:100%;
+right:-100%;
+}
+
+.cart.open{
+right:0;
+}
+}
+
+/* ===== MOBILE FINO ===== */
+@media(max-width:480px){
+
+.grid{
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+}
+
+.card{
+padding:10px;
+}
+
+.card h3{
+font-size:13px;
+}
+
+.price{
+font-size:14px;
+}
+
 }
