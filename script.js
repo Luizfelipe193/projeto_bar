@@ -1,56 +1,42 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// =========================
-// INIT
-// =========================
-
+// ================= INIT =================
 window.onload = () => {
 renderCart();
-};
+verificarHorario();
+}
 
-// =========================
-// NAVEGAÇÃO
-// =========================
-
+// ================= NAV =================
 function abrirCardapioTela(){
 document.getElementById("home").style.display="none";
 document.getElementById("cardapio").style.display="block";
 }
 
-// =========================
-// CARRINHO
-// =========================
-
+// ================= CARRINHO =================
 function addItem(nome,preco){
 
 let item = cart.find(p=>p.nome===nome);
 
-if(item){
-item.qtd++;
-}else{
-cart.push({nome,preco,qtd:1});
-}
+if(item){ item.qtd++; }
+else{ cart.push({nome,preco,qtd:1}); }
 
 localStorage.setItem("cart", JSON.stringify(cart));
-
 renderCart();
-document.getElementById("cart").classList.add("open");
 
+document.getElementById("cart").classList.add("open");
 mostrarFeedback("Item adicionado!");
 }
 
 function alterarQtd(nome,acao){
 
 let item = cart.find(p=>p.nome===nome);
-
 if(!item) return;
 
-if(acao === "mais"){
-item.qtd++;
-}else{
+if(acao==="mais"){ item.qtd++; }
+else{
 item.qtd--;
-if(item.qtd <= 0){
-cart = cart.filter(p=>p.nome !== nome);
+if(item.qtd<=0){
+cart = cart.filter(p=>p.nome!==nome);
 }
 }
 
@@ -59,15 +45,12 @@ renderCart();
 }
 
 function removerItem(nome){
-cart = cart.filter(p=>p.nome !== nome);
+cart = cart.filter(p=>p.nome!==nome);
 localStorage.setItem("cart", JSON.stringify(cart));
 renderCart();
 }
 
-// =========================
-// TAXAS FIXAS
-// =========================
-
+// ================= TAXAS =================
 const taxas = {
 "Alecrim":5,
 "Bairro Nazaré":6,
@@ -100,18 +83,20 @@ const taxas = {
 "Tirol":8
 };
 
-// =========================
-// RENDER COM TAXA AO VIVO
-// =========================
-
+// ================= RENDER =================
 function renderCart(){
+
+let items = document.getElementById("items");
+let totalEl = document.getElementById("total");
+let count = document.getElementById("count");
+
+if(!items || !totalEl || !count) return;
 
 let html='';
 let subtotal=0;
 let qtd=0;
 
 cart.forEach(item=>{
-
 let sub=item.preco*item.qtd;
 subtotal+=sub;
 qtd+=item.qtd;
@@ -131,52 +116,42 @@ ${item.qtd}
 `;
 });
 
-// pegar dados do form
+// taxa dinâmica
 let tipo = document.getElementById("tipo")?.value;
 let bairro = document.getElementById("bairro")?.value;
 
 let taxa = 0;
 
-if(tipo === "Delivery" && bairro && bairro !== "Outro"){
+if(tipo==="Delivery" && bairro && bairro!=="Outro"){
 taxa = taxas[bairro] || 0;
 }
 
 let total = subtotal + taxa;
 
-// render final
-document.getElementById("items").innerHTML = html;
+items.innerHTML = html;
 
-document.getElementById("total").innerHTML = `
+totalEl.innerHTML = `
 Subtotal: R$ ${subtotal.toFixed(2)}<br>
 Taxa: R$ ${taxa.toFixed(2)}<br>
 <b>Total: R$ ${total.toFixed(2)}</b>
 `;
 
-document.getElementById("count").innerHTML=qtd;
+count.innerHTML=qtd;
 }
 
-// =========================
-// ATUALIZA AUTOMÁTICO
-// =========================
-
-document.addEventListener("change", function(e){
-if(e.target.id === "bairro" || e.target.id === "tipo"){
+// ================= ATUALIZA AUTOMÁTICO =================
+document.addEventListener("change", e=>{
+if(e.target.id==="bairro" || e.target.id==="tipo"){
 renderCart();
 }
 });
 
-// =========================
-// CARRINHO UI
-// =========================
-
+// ================= UI =================
 function toggleCart(){
 document.getElementById("cart").classList.toggle("open");
 }
 
-// =========================
-// CHECKOUT
-// =========================
-
+// ================= CHECKOUT =================
 function abrirCheckout(){
 
 if(cart.length===0){
@@ -184,32 +159,38 @@ alert("Adicione produtos");
 return;
 }
 
+// MOSTRA CHECKOUT
 document.getElementById("acoesCarrinho").style.display="none";
 document.getElementById("checkoutBox").style.display="block";
+
+// garante render atualizado
+renderCart();
 }
 
+function voltarCarrinho(){
+document.getElementById("checkoutBox").style.display="none";
+document.getElementById("acoesCarrinho").style.display="block";
+}
+
+// ================= ENDEREÇO =================
 function showEndereco(){
 let tipo=document.getElementById("tipo").value;
+
 document.getElementById("enderecoBox").style.display =
 tipo==="Delivery" ? "block":"none";
+
+renderCart();
 }
 
-// =========================
-// ENVIAR PEDIDO COM HORÁRIO
-// =========================
-
+// ================= PEDIDO =================
 function enviarPedido(){
 
 let agora = new Date();
 let hora = agora.getHours();
 let minuto = agora.getMinutes();
 
-// BLOQUEIO
-if(
-hora < 18 ||
-(hora === 23 && minuto > 10) ||
-hora > 23
-){
+// BLOQUEIO HORÁRIO
+if(hora < 18 || (hora===23 && minuto>10) || hora>23){
 alert("Estamos fechados. Funcionamos das 18:00 às 23:10.");
 return;
 }
@@ -222,34 +203,26 @@ let bairro=document.getElementById("bairro").value;
 let endereco=document.getElementById("endereco").value;
 let referencia=document.getElementById("referencia").value;
 let pagamento=document.getElementById("pagamento").value;
-let observacao=document.getElementById("observacao")?.value.trim(); // 👈 NOVO
+let obs=document.getElementById("observacao")?.value;
 
 // VALIDAÇÃO
 if(!nome){ alert("Digite seu nome"); return; }
 if(!fone){ alert("Digite seu telefone"); return; }
 
-if(tipo==="Delivery"){
-if(!bairro){ alert("Selecione o bairro"); return; }
-if(!endereco){ alert("Digite o endereço"); return; }
-}
+// DATA E HORA
+let data = agora.toLocaleDateString('pt-BR');
+let horaAtual = agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
 // CALCULO
 let subtotal=0;
 let taxa=0;
 
-if(tipo==="Delivery" && bairro !== "Outro"){
+if(tipo==="Delivery" && bairro!=="Outro"){
 taxa = taxas[bairro] || 0;
 }
 
-// DATA/HORA
-let data=new Date().toLocaleDateString('pt-BR');
-let horaAtual=new Date().toLocaleTimeString('pt-BR',{
-hour:'2-digit',
-minute:'2-digit'
-});
-
-// MENSAGEM
-let mensagem=`Pedido Bar do Pastel
+// ================= MENSAGEM ORGANIZADA =================
+let msg = `Pedido Bar do Pastel
 
 Data: ${data}
 Hora: ${horaAtual}
@@ -262,125 +235,158 @@ Telefone: ${fone}
 
 // ENTREGA
 if(tipo==="Delivery"){
-
-mensagem+=`
+msg += `
 Bairro: ${bairro}
 Endereço: ${endereco}
 `;
 
 if(referencia){
-mensagem+=`Referência: ${referencia}
+msg += `Referência: ${referencia}
 `;
 }
 
-if(bairro === "Outro"){
-mensagem+=`Taxa de entrega: A confirmar
-`;
-}else{
-mensagem+=`Taxa de entrega: R$ ${taxa.toFixed(2)}
-`;
-}
+msg += bairro==="Outro"
+? "Taxa de entrega: A confirmar\n"
+: `Taxa de entrega: R$ ${taxa.toFixed(2)}\n`;
 }
 
 // PRODUTOS
-mensagem+=`
+msg += `
 Produtos:
 `;
 
-cart.forEach(item=>{
-let sub=item.preco*item.qtd;
+cart.forEach(i=>{
+let sub=i.preco*i.qtd;
 subtotal+=sub;
 
-mensagem+=`${item.nome} x${item.qtd} - R$ ${sub.toFixed(2)}
+msg += `${i.nome} x${i.qtd} - R$ ${sub.toFixed(2)}
 `;
 });
 
-// 👇 OBSERVAÇÃO (SÓ SE TIVER)
-if(observacao){
-mensagem+=`
-Observação: ${observacao}
+// OBSERVAÇÃO
+if(obs){
+msg += `
+Observação: ${obs}
 `;
 }
 
 // TOTAL
 let total = subtotal + taxa;
 
-mensagem+=`
+msg += `
 Total: R$ ${total.toFixed(2)}
 
 Pagamento: ${pagamento}
 `;
 
 // ENVIO
-window.open(`https://wa.me/5584987415810?text=${encodeURIComponent(mensagem)}`);
+window.open(`https://wa.me/5584987415810?text=${encodeURIComponent(msg)}`);
 
-// LIMPAR
+// RESET
 cart=[];
 localStorage.removeItem("cart");
 renderCart();
+voltarCarrinho();
 }
 
-// =========================
-// FEEDBACK
-// =========================
-
+// ================= FEEDBACK =================
 function mostrarFeedback(msg){
-
-let div = document.createElement("div");
-
-div.innerText = msg;
-
-div.style.position = "fixed";
-div.style.bottom = "80px";
-div.style.right = "20px";
-div.style.background = "#25d366";
-div.style.color = "#fff";
-div.style.padding = "12px 20px";
-div.style.borderRadius = "10px";
-div.style.fontWeight = "bold";
-div.style.zIndex = "9999";
-
-document.body.appendChild(div);
-
-setTimeout(()=>{
-div.remove();
-},2000);
+let d=document.createElement("div");
+d.innerText=msg;
+d.style.position="fixed";
+d.style.bottom="80px";
+d.style.right="20px";
+d.style.background="#25d366";
+d.style.color="#fff";
+d.style.padding="10px";
+d.style.borderRadius="10px";
+document.body.appendChild(d);
+setTimeout(()=>d.remove(),2000);
 }
 
-
+// ================= HORARIO =================
 function verificarHorario(){
-
 let agora = new Date();
-let hora = agora.getHours();
-let minuto = agora.getMinutes();
+let h = agora.getHours();
+let m = agora.getMinutes();
 
-let aberto = true;
+let aberto = !(h<18 || (h===23 && m>10) || h>23);
 
-// regra: 18:00 até 23:10
-if(
-hora < 18 ||
-(hora === 23 && minuto > 10) ||
-hora > 23
-){
-aberto = false;
-}
-
-let statusDiv = document.getElementById("statusLoja");
-
-if(!statusDiv) return;
+let el=document.getElementById("statusLoja");
+if(!el) return;
 
 if(aberto){
-statusDiv.innerText = "🟢 Aberto agora";
-statusDiv.className = "status-loja aberto";
+el.innerText="🟢 Aberto";
+el.className="status-loja aberto";
 }else{
-statusDiv.innerText = "🔴 Fechado agora (abre às 18:00)";
-statusDiv.className = "status-loja fechado";
+el.innerText="🔴 Fechado";
+el.className="status-loja fechado";
+}
 }
 
+setInterval(verificarHorario,30000);
+
+// ================= MODAL =================
+let saboresSelecionados=[];
+let limite=0;
+let nomeAtual="";
+let precoAtual=0;
+
+const sabores=["Carne","Frango","Queijo","Catupiry","Calabresa","Presunto","Cheddar"];
+
+function abrirModalSabores(nome,preco,lim){
+nomeAtual=nome;
+precoAtual=preco;
+limite=lim;
+saboresSelecionados=[];
+
+let modal=document.getElementById("modalSabores");
+if(!modal) return;
+
+modal.style.display="flex";
+
+let html="";
+sabores.forEach(s=>{
+html+=`<div class="sabor-btn" onclick="toggleSabor(this,'${s}')">${s}</div>`;
+});
+
+document.getElementById("listaSabores").innerHTML=html;
+document.getElementById("tituloModal").innerText=`Escolha até ${lim} sabores`;
 }
 
-// roda ao carregar
-verificarHorario();
+function toggleSabor(el,s){
 
-// atualiza a cada 30s
-setInterval(verificarHorario, 30000);
+if(saboresSelecionados.includes(s)){
+saboresSelecionados=saboresSelecionados.filter(x=>x!==s);
+el.classList.remove("active");
+return;
+}
+
+if(saboresSelecionados.length>=limite){
+alert(`Máximo ${limite}`);
+return;
+}
+
+saboresSelecionados.push(s);
+el.classList.add("active");
+}
+
+function confirmarSabores(){
+if(saboresSelecionados.length===0){
+alert("Escolha sabores");
+return;
+}
+
+addItem(`${nomeAtual} (${saboresSelecionados.join(" + ")})`,precoAtual);
+fecharModal();
+}
+
+function fecharModal(){
+document.getElementById("modalSabores").style.display="none";
+}
+
+
+
+function fecharCarrinho(){
+document.getElementById("cart").classList.remove("open");
+}
