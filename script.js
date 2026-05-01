@@ -390,3 +390,51 @@ document.getElementById("modalSabores").style.display="none";
 function fecharCarrinho(){
 document.getElementById("cart").classList.remove("open");
 }
+
+
+
+
+
+
+
+
+
+function mostrarCategoria(id){
+  // esconde tudo
+  document.querySelectorAll('.categoria-box').forEach(el=>{
+    el.classList.remove('active');
+  });
+
+  // mostra selecionado
+  document.getElementById(id).classList.add('active');
+
+  // botão ativo
+  document.querySelectorAll('.menu-categorias button').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+}
+
+
+
+
+
+// abre pastel por padrão
+window.onload = () => {
+  document.getElementById('pasteis').classList.add('active');
+  document.querySelector('.menu-categorias button').classList.add('active');
+};
+
+
+
+
+
+
+
+
+
+
+
+
+

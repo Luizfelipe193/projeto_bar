@@ -344,3 +344,45 @@ color:#fff;
 border-left:4px solid #ff9800;
 padding-left:10px;
 }
+
+
+
+
+.menu-categorias{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
+position:sticky;
+top:0;
+background:#0f0f0f;
+z-index:999;
+}
+
+.menu-categorias button{
+background:#222;
+color:#fff;
+border:none;
+padding:10px 15px;
+border-radius:20px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.menu-categorias button.active{
+background:#ff9800;
+color:#111;
+}
+
+.categoria-box{
+display:none;
+}
+
+.categoria-box.active{
+display:block;
+}
+
+
+
+
+

@@ -46,9 +46,28 @@
 <h1>Mais de 50 Sabores</h1>
 <p>Escolha seu pastel favorito e peça agora.</p>
 </section>
+
+
+
+<div class="menu-categorias">
+  <button onclick="mostrarCategoria('pasteis')">🥟 Pastéis</button>
+  <button onclick="mostrarCategoria('petiscos')">🍟 Petiscos</button>
+  <button onclick="mostrarCategoria('pratos')">🍝 Pratos</button>
+  <button onclick="mostrarCategoria('Caldos')">🥣 Caldos</button>
+  <button onclick="mostrarCategoria('Sucos')">🥤 Sucos</button>
+  <button onclick="mostrarCategoria('Cervejas')">🍺 Cervejas</button>
+  <button onclick="mostrarCategoria('bebidas')">🥤 Bebidas</button>
+</div>
+
+
+
+
 <!-- CARDÁPIO COMPLETO RESTAURADO + MODAL -->
 
 <div class="container">
+
+<div class="categoria-box" id="pasteis">
+
 
 
     <h1 class="categoria">🥟 Pastéis</h1>
@@ -340,7 +359,10 @@ Adicionar
 <div class="card"><h3>4 sabores</h3><div class="price">R$ 19,00</div><button onclick="abrirModalSabores('Pastel 4 sabores',19,4)">Escolher</button></div>
 <div class="card"><h3>5 sabores</h3><div class="price">R$ 19,00</div><button onclick="abrirModalSabores('Pastel 5 sabores',19,5)">Escolher</button></div>
 </div>
+</div>
 
+
+<div class="categoria-box" id="petiscos">
 
 <h1 class="categoria">🍟 Petiscos</h1>
 
@@ -447,6 +469,11 @@ Adicionar
 </div>
 
 </div>
+</div>
+
+
+<div class="categoria-box" id="pratos">
+
 
 <h1 class="categoria">🍝 Pratos</h1>
 
@@ -530,7 +557,10 @@ Adicionar
 </div>
 
 </div>
+</div>
 
+
+<div class="categoria-box" id="Caldos">
 
 
 <h1 class="categoria"> 🥣 Caldos</h1>
@@ -541,7 +571,9 @@ Adicionar
 <div class="card"><h3>Vaca Atolada</h3><div class="price">R$ 18,00</div><button onclick="addItem('Vaca Atolada',18)">Adicionar</button></div>
 <div class="card"><h3>Mocotó</h3><div class="price">R$ 18,00</div><button onclick="addItem('Mocotó',18)">Adicionar</button></div>
 </div>
+</div>
 
+<div class="categoria-box" id="Sucos">
 
 <h1 class="categoria">🥤 Sucos</h1>
 
@@ -579,6 +611,10 @@ Adicionar
 </div>
 
 </div>
+</div>
+
+
+<div class="categoria-box" id="Cervejas">
 
 
 <h1 class="categoria"> 🍺 Cervejas</h1>
@@ -592,6 +628,12 @@ Adicionar
 <div class="card"><h3>Cerveja 600ml</h3><p>Spaten,Budwiser,Stella</p><div class="price">R$ 15,00</div><button onclick="addItem('Cerveja 600ml',15)">Adicionar</button></div>
 <div class="card"><h3>Heineken 600ml</h3><div class="price">R$ 18,00</div><button onclick="addItem('Heineken 600ml',18)">Adicionar</button></div>
 </div>
+</div>
+
+
+
+
+<div class="categoria-box" id="bebidas">
 
 
 <h1 class="categoria"> 🥤 Bebidas</h1>
@@ -638,6 +680,7 @@ Adicionar
 
 <div class="card"><h3>Red Bull</h3><div class="price">R$ 14,00</div><button onclick="addItem('Red Bull',14)">Adicionar</button></div>
 
+</div>
 </div>
 
 <!-- MODAL -->
