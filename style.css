@@ -386,4 +386,7 @@ display:block;
 
 
 
-
+#checkoutBox{
+scroll-margin-top:80px;
+padding-bottom:120px;
+}

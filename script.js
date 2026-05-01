@@ -430,9 +430,18 @@ window.onload = () => {
 
 
 
+function irParaCheckout(){
+let checkout = document.getElementById("checkoutBox");
 
+// mostra checkout
+checkout.style.display = "block";
 
-
+// rola até ele
+checkout.scrollIntoView({
+behavior: "smooth",
+block: "start"
+});
+}
 
 
 
