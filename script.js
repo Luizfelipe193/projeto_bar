@@ -166,30 +166,29 @@ if(cart.length === 0){
   return;
 }
 
-// garante que o carrinho esteja visível
-document.getElementById("cart").classList.add("active");
+// garante que carrinho está aberto
+const cartBox = document.getElementById("cart");
+cartBox.classList.add("active");
 
-// esconde ações (botões de continuar)
+// esconde botões antigos
 document.getElementById("acoesCarrinho").style.display = "none";
 
 // mostra checkout
-let checkout = document.getElementById("checkoutBox");
+const checkout = document.getElementById("checkoutBox");
 checkout.style.display = "block";
 
 // atualiza carrinho
 renderCart();
 
-// 🔥 SCROLL CONFIÁVEL (MELHOR QUE scrollIntoView)
+// 🔥 SCROLL CORRETO (DENTRO DO CARRINHO)
 setTimeout(() => {
 
-  const y = checkout.getBoundingClientRect().top + window.scrollY;
-
-  window.scrollTo({
-    top: y - 20, // pequeno ajuste visual
+  cartBox.scrollTo({
+    top: checkout.offsetTop - 20,
     behavior: "smooth"
   });
 
-}, 250);
+}, 200);
 
 }
 
