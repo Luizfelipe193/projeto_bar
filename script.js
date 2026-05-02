@@ -2,9 +2,16 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // ================= INIT =================
 window.onload = () => {
-renderCart();
-verificarHorario();
-}
+  renderCart();
+  verificarHorario();
+
+  // categoria padrão (evita erro caso ainda não carregou)
+  const cat = document.getElementById('pasteis');
+  if(cat) cat.classList.add('active');
+
+  const btn = document.querySelector('.menu-categorias button');
+  if(btn) btn.classList.add('active');
+};
 
 // ================= NAV =================
 function abrirCardapioTela(){
@@ -163,23 +170,22 @@ return;
 document.getElementById("acoesCarrinho").style.display="none";
 document.getElementById("checkoutBox").style.display="block";
 
-// garante render atualizado
+// atualiza carrinho
 renderCart();
+
+// 🔥 ESSA PARTE RESOLVE O MOBILE
+setTimeout(() => {
+  document.getElementById("checkoutBox").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}, 200);
+
 }
 
 function voltarCarrinho(){
 document.getElementById("checkoutBox").style.display="none";
 document.getElementById("acoesCarrinho").style.display="block";
-}
-
-// ================= ENDEREÇO =================
-function showEndereco(){
-let tipo=document.getElementById("tipo").value;
-
-document.getElementById("enderecoBox").style.display =
-tipo==="Delivery" ? "block":"none";
-
-renderCart();
 }
 
 // ================= PEDIDO =================
@@ -420,28 +426,8 @@ function mostrarCategoria(id){
 
 
 
-// abre pastel por padrão
-window.onload = () => {
-  document.getElementById('pasteis').classList.add('active');
-  document.querySelector('.menu-categorias button').classList.add('active');
-};
 
 
-
-
-
-function irParaCheckout(){
-let checkout = document.getElementById("checkoutBox");
-
-// mostra checkout
-checkout.style.display = "block";
-
-// rola até ele
-checkout.scrollIntoView({
-behavior: "smooth",
-block: "start"
-});
-}
 
 
 
