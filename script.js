@@ -161,47 +161,31 @@ document.getElementById("cart").classList.toggle("open");
 // ================= CHECKOUT =================
 function abrirCheckout(){
 
-if(cart.length === 0){
-  alert("Adicione produtos");
-  return;
+if(cart.length===0){
+alert("Adicione produtos");
+return;
 }
 
-// garante que carrinho está aberto
-const cartBox = document.getElementById("cart");
-cartBox.classList.add("active");
-
-// esconde botões antigos
-document.getElementById("acoesCarrinho").style.display = "none";
-
-// mostra checkout
-const checkout = document.getElementById("checkoutBox");
-checkout.style.display = "block";
+// MOSTRA CHECKOUT
+document.getElementById("acoesCarrinho").style.display="none";
+document.getElementById("checkoutBox").style.display="block";
 
 // atualiza carrinho
 renderCart();
 
-// 🔥 SCROLL CORRETO (DENTRO DO CARRINHO)
+// 🔥 ESSA PARTE RESOLVE O MOBILE
 setTimeout(() => {
-
-  cartBox.scrollTo({
-    top: checkout.offsetTop - 20,
-    behavior: "smooth"
+  document.getElementById("checkoutBox").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
   });
-
 }, 200);
 
 }
 
 function voltarCarrinho(){
-
-document.getElementById("checkoutBox").style.display = "none";
-document.getElementById("acoesCarrinho").style.display = "block";
-
-// opcional: volta pro topo do carrinho
-setTimeout(() => {
-  document.getElementById("cart").scrollTop = 0;
-}, 100);
-
+document.getElementById("checkoutBox").style.display="none";
+document.getElementById("acoesCarrinho").style.display="block";
 }
 // ================= PEDIDO =================
 function enviarPedido(){
