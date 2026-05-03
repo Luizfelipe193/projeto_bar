@@ -406,3 +406,19 @@ padding-bottom:120px;
   }
 
 }
+
+@media (max-width: 768px){
+
+  .continuar-btn{
+    display: none !important;
+  }
+
+  #cart .continuar-btn{
+    display: block !important;
+  }
+
+}
+
+#cart:not(.open) .cart-actions{
+  display: none;
+}
