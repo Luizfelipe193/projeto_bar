@@ -420,15 +420,3 @@ function mostrarCategoria(id){
 
   event.target.classList.add('active');
 }
-
-
-
-
-
-
-
-
-
-
-
-
