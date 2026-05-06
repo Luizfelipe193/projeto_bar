@@ -4,6 +4,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 window.onload = () => {
   renderCart();
   verificarHorario();
+  showEndereco();
 
   // categoria padrão (evita erro caso ainda não carregou)
   const cat = document.getElementById('pasteis');
@@ -187,6 +188,32 @@ function voltarCarrinho(){
 document.getElementById("checkoutBox").style.display="none";
 document.getElementById("acoesCarrinho").style.display="block";
 }
+
+
+function showEndereco(){
+
+let tipo = document.getElementById("tipo").value;
+let enderecoBox = document.getElementById("enderecoBox");
+
+if(tipo === "Retirada"){
+
+  enderecoBox.style.display = "none";
+
+  // limpa campos
+  document.getElementById("bairro").value = "";
+  document.getElementById("endereco").value = "";
+  document.getElementById("referencia").value = "";
+
+}else{
+
+  enderecoBox.style.display = "block";
+
+}
+
+}
+
+
+
 // ================= PEDIDO =================
 function enviarPedido(){
 
