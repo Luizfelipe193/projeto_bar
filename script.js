@@ -75,7 +75,7 @@ const taxas = {
 "Felipe Camarão":10,
 "Jardim América":7,
 "Lagoa Nova":7,
-"Lagoa Seca":6,
+"Lagoa Seca":7,
 "Mãe Luiza":12,
 "Neópolis":15,
 "Parnamirim":20,
