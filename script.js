@@ -311,6 +311,44 @@ Total: R$ ${total.toFixed(2)}
 Pagamento: ${pagamento}
 `;
 
+fetch("http://192.168.1.253:3000/pedido", {
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+nome,
+fone,
+tipo,
+bairro,
+endereco,
+referencia,
+pagamento,
+observacao:obs,
+itens:cart,
+subtotal,
+taxa,
+total
+
+})
+
+})
+.then(res=>res.json())
+.then(data=>{
+console.log("Pedido enviado para impressão");
+})
+.catch(err=>{
+console.log("Erro:",err);
+});
+
+
+
+
+
 // ENVIO
 window.open(`https://wa.me/5584987415810?text=${encodeURIComponent(msg)}`);
 
