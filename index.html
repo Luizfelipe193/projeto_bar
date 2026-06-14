@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bar do Pastel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HOME -->
+<section id="home" class="home">
+
+<img src="img/logo.png" class="logo-home">
+<div id="statusLoja" class="status-loja">Verificando...</div>
+
+<h1>Bem-vindo ao Bar do Pastel</h1>
+<h1>30cm e mais de 50 sabores incríveis 🍴</h1>
+
+<div class="home-buttons">
+<button onclick="abrirCardapioTela()">📋 Ver Cardápio</button>
+
+<a href="https://wa.me/5584987415810" target="_blank">
+<button>💬 WhatsApp</button>
+</a>
+
+<a href="https://www.instagram.com/bardopastelnatalrn/" target="_blank" class="btn-main">
+📸 Instagram
+</a>
+
+<a href="https://www.google.com/maps/place/Bar+do+Pastel/@-5.8060237,-35.2232743" target="_blank" class="btn-main">
+📍 Localização
+</a>
+</div>
+
+</section>
+
+<!-- CARDÁPIO -->
+
+<div id="cardapio" style="display:none;">
+
+<header class="cardapio-topbar">
+  <button class="topbar-back" onclick="voltarMenuInicial()" aria-label="Voltar ao menu inicial">‹</button>
+
+  <div class="topbar-brand">
+    <img src="img/logo.png" alt="Bar do Pastel">
+    <span>Bar do Pastel</span>
+  </div>
+
+  <nav class="topbar-links" aria-label="Links do restaurante">
+    <a href="https://wa.me/5584987415810" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://www.instagram.com/bardopastelnatalrn/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.google.com/maps/place/Bar+do+Pastel/@-5.8060237,-35.2232743" target="_blank" rel="noopener">Localização</a>
+  </nav>
+</header>
+
+<section class="hero">
+<h1>Mais de 50 Sabores</h1>
+<p>Escolha seu pastel favorito e peça agora.</p>
+</section>
+
+
+<div class="cardapio-tools">
+  <label class="search-box" for="buscaCardapio">
+    <span>Buscar</span>
+    <input id="buscaCardapio" type="search" placeholder="Digite pastel, camarão, coca..." autocomplete="off">
+  </label>
+
+  <div class="quick-filters" aria-label="Atalhos do cardápio">
+    <button onclick="mostrarCategoria('pasteis', document.querySelector('[data-categoria-btn=pasteis]'))">Pastéis</button>
+    <button onclick="mostrarCategoria('petiscos', document.querySelector('[data-categoria-btn=petiscos]'))">Petiscos</button>
+    <button onclick="mostrarCategoria('Cervejas', document.querySelector('[data-categoria-btn=Cervejas]'))">Cervejas</button>
+    <button onclick="mostrarCategoria('bebidas', document.querySelector('[data-categoria-btn=bebidas]'))">Bebidas</button>
+  </div>
+</div>
+
+<div class="menu-categorias">
+  <button data-categoria-btn="pasteis" onclick="mostrarCategoria('pasteis', this)">🥟 Pastéis</button>
+  <button data-categoria-btn="petiscos" onclick="mostrarCategoria('petiscos', this)">🍟 Petiscos</button>
+  <button data-categoria-btn="pratos" onclick="mostrarCategoria('pratos', this)">🍝 Pratos</button>
+  <button data-categoria-btn="Caldos" onclick="mostrarCategoria('Caldos', this)">🥣 Caldos</button>
+  <button data-categoria-btn="Sucos" onclick="mostrarCategoria('Sucos', this)">🥤 Sucos</button>
+  <button data-categoria-btn="Cervejas" onclick="mostrarCategoria('Cervejas', this)">🍺 Cervejas</button>
+  <button data-categoria-btn="bebidas" onclick="mostrarCategoria('bebidas', this)">🥤 Bebidas</button>
+</div>
+
+
+
+
+<!-- CARDÁPIO COMPLETO RESTAURADO + MODAL -->
+
+<div class="container">
+
+<div class="categoria-box" id="pasteis">
+
+
+
+    <h1 class="categoria">🥟 Pastéis</h1>
+
+<h2>Pastéis Tradicionais</h2>
+<div class="grid">
+<div class="card"><h3>Carne</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Carne',14)">Adicionar</button></div>
+<div class="card"><h3>Coalho</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Coalho',14)">Adicionar</button></div>
+<div class="card"><h3>Cheddar</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Cheddar',14)">Adicionar</button></div>
+<div class="card"><h3>Frango</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Frango',14)">Adicionar</button></div>
+<div class="card"><h3>Presunto</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Presunto',14)">Adicionar</button></div>
+<div class="card"><h3>Calabresa</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Calabresa',14)">Adicionar</button></div>
+<div class="card"><h3>Catupiry</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Catupiry',14)">Adicionar</button></div>
+<div class="card"><h3>Queijo</h3><div class="price">R$ 14,00</div><button onclick="addItem('Pastel Queijo',14)">Adicionar</button></div>
+</div>
+
+<h2>Pastéis Dois Sabores</h2>
+<div class="grid">
+<div class="card"><h3>Frango + Catupiry</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Catupiry',15)">Adicionar</button></div>
+<div class="card"><h3>Frango + Cheddar</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Cheddar',15)">Adicionar</button></div>
+<div class="card"><h3>Frango + Milho</h3><div class="price">R$ 15,00</div><button onclick="addItem('Frango + Milho',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Bacon</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Bacon',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Cebola</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Cebola',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Azeitona</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Azeitona',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Ovo</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Ovo',15)">Adicionar</button></div>
+<div class="card"><h3>Carne + Queijo</h3><div class="price">R$ 15,00</div><button onclick="addItem('Carne + Queijo',15)">Adicionar</button></div>
+<div class="card"><h3>Pizza</h3><div class="price">R$ 15,00</div><button onclick="addItem('Pizza',15)">Adicionar</button></div>
+<div class="card"><h3>Atum</h3><div class="price">R$ 15,00</div><button onclick="addItem('Atum',15)">Adicionar</button></div>
+
+<div class="card">
+<h3>Frango + Queijo</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Frango com Queijo',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne + Cheddar</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Carne com Cheddar',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Frango + Bacon</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Frango com Bacon',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne + Coalho</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Carne com Coalho',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Presunto + Queijo</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Presunto com Queijo',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne + Milho</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Carne com Milho',15)">Adicionar</button>
+</div>
+
+
+
+
+
+<div class="card">
+<h3>Calabresa + Queijo</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Calabresa com Queijo',15)">Adicionar</button>
+</div>
+</div> 
+
+
+
+
+
+
+
+
+
+<h2>Pastéis 3 Sabores</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Mussarela + Tomate + Manjericão</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel 3 sabores (Mussarela + Tomate + Manjericão)',15)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<h3>Frango + Catupiry + Azeitona</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel 3 sabores (Frango + Catupiry + Azeitona)',16)">
+Adicionar
+</button>
+</div>
+
+</div>
+
+
+
+<h2>Pastéis 4 Sabores</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Carne + Cheddar + Queijo + Azeitona</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel 4 sabores (Carne + Cheddar + Queijo + Azeitona)',16)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<h3>Frango + Cheddar + Ovo + Azeitona</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel 4 sabores (Frango + Cheddar + Ovo + Azeitona)',16)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<h3>Frango + Queijo + Cebola + Ovo</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel 4 sabores (Frango + Queijo + Cebola + Ovo)',16)">
+Adicionar
+</button>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<h2>Pastéis Especiais</h2>
+<div class="grid">
+    <div class="card">
+<h3>Mini Pastel (12 unidades)</h3>
+<div class="price">R$ 25,00</div>
+<button onclick="addItem('Mini Pastel 12 unidades',25)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Mini Pastéis Camarão (12 unidades)</h3>
+<div class="price">R$ 28,00</div>
+<button onclick="addItem('Mini Pastéis Camarão 12 unidades',28)">Adicionar</button>
+</div>
+<div class="card"><h3>Montanha</h3><p>Carne, ovo, cebola e azeitona</p><div class="price">R$ 16,00</div><button onclick="addItem('Montanha',16)">Adicionar</button></div>
+<div class="card"><h3>Quatro Queijos</h3><div class="price">R$ 16,00</div><button onclick="addItem('Quatro Queijos',16)">Adicionar</button></div>
+<div class="card"><h3>Du Zé</h3><P>Frango,Catupiry e Milho</P><div class="price">R$ 16,00</div><button onclick="addItem('Du Zé',16)">Adicionar</button></div>
+<div class="card"><h3>Tricolor</h3><p>Atum,Catupiry e azeitonas</p><div class="price">R$ 16,00</div><button onclick="addItem('Tricolor',16)">Adicionar</button></div>
+<div class="card"><h3>Bomba</h3><p>Carne,Ovo,Cebola,Queijo</p><div class="price">R$ 16,00</div><button onclick="addItem('Bomba',16)">Adicionar</button></div>
+<div class="card"><h3>Camarão Especial</h3><p>Camarao ao molho branco</p><div class="price">R$ 20,00</div><button onclick="addItem('Camarão Especial',20)">Adicionar</button></div>
+
+<div class="card">
+<h3>Disco Voador</h3>
+<p>Escolha até 5 sabores</p>
+<div class="price">R$ 27,00</div>
+<button onclick="abrirModalSabores('Disco Voador',27,5)">Escolher Sabores</button>
+</div>
+
+
+
+
+<div class="card">
+<h3>Camarão ao alho e óleo c/ queijo coalho</h3>
+<div class="price">R$ 25,00</div>
+<button onclick="addItem('Pastel Camarão alho e óleo c/ queijo coalho',25)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão c/ Catupiry</h3>
+<div class="price">R$ 21,00</div>
+<button onclick="addItem('Pastel Camarão c/ Catupiry',21)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão c/ Cheddar</h3>
+<div class="price">R$ 21,00</div>
+<button onclick="addItem('Pastel Camarão c/ Cheddar',21)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão c/ Queijo</h3>
+<div class="price">R$ 21,00</div>
+<button onclick="addItem('Pastel Camarão c/ Queijo',21)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne + Bacon + Ovo + Milho</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel Carne + Bacon + Ovo + Milho',16)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne + Bacon + Ovo + Cebola</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel Carne + Bacon + Ovo + Cebola',16)">Adicionar</button>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<h2>Pastéis Doces</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Pastel Doce de Leite</h3>
+<div class="price">R$ 14,00</div>
+<button onclick="addItem('Pastel Doce de Leite',14)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Pastel Banana</h3>
+<div class="price">R$ 14,00</div>
+<button onclick="addItem('Pastel Banana',14)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Chocolate / Queijo</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Chocolate com Queijo',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Chocolate / Banana</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Chocolate com Banana',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Romeu e Julieta</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Romeu e Julieta',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Chocolate</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Chocolate',15)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Banana / Chocolate / Queijo</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel Banana Chocolate Queijo',16)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Banana / Goiabada / Queijo</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel Banana Goiabada Queijo',16)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Banana / Doce de Leite / Queijo</h3>
+<div class="price">R$ 16,00</div>
+<button onclick="addItem('Pastel Banana Doce de Leite Queijo',16)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Prestígio</h3>
+<div class="price">R$ 15,00</div>
+<button onclick="addItem('Pastel Prestigio',15)">Adicionar</button>
+</div>
+
+</div>
+<h2>Monte seu Pastel</h2>
+<p style="color:#ccc;">Escolha os sabores no popup</p>
+
+<div class="grid">
+<div class="card"><h3>2 sabores</h3><div class="price">R$ 15,00</div><button onclick="abrirModalSabores('Pastel 2 sabores',15,2)">Escolher</button></div>
+<div class="card"><h3>3 sabores</h3><div class="price">R$ 16,00</div><button onclick="abrirModalSabores('Pastel 3 sabores',16,3)">Escolher</button></div>
+<div class="card"><h3>4 sabores</h3><div class="price">R$ 19,00</div><button onclick="abrirModalSabores('Pastel 4 sabores',19,4)">Escolher</button></div>
+<div class="card"><h3>5 sabores</h3><div class="price">R$ 19,00</div><button onclick="abrirModalSabores('Pastel 5 sabores',19,5)">Escolher</button></div>
+</div>
+</div>
+
+
+<div class="categoria-box" id="petiscos">
+
+<h1 class="categoria">🍟 Petiscos</h1>
+
+<h2>Petiscos</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Batata Frita</h3>
+<div class="price">R$ 22,00</div>
+<button onclick="addItem('Batata Frita',22)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Ovos de Codorna (12 unid.)</h3>
+<div class="price">R$ 10,00</div>
+<button onclick="addItem('Ovos de Codorna (12 unid.)',10)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão ao Alho e Óleo</h3>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Camarão ao Alho e Óleo',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão com Fritas</h3>
+<div class="price">R$ 60,00</div>
+<button onclick="addItem('Camarão com Fritas',60)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Saladinha</h3>
+<div class="price">R$ 20,00</div>
+<button onclick="addItem('Saladinha',20)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Carne de Sol com Fritas</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Carne de Sol com Fritas',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Calabresa com Fritas</h3>
+<div class="price">R$ 50,00</div>
+<button onclick="addItem('Calabresa com Fritas',50)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Língua ao Molho Madeira</h3>
+<div class="price">R$ 35,00</div>
+<button onclick="addItem('Língua ao Molho Madeira',35)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Petisco Misto</h3>
+<p style="font-size:12px;">(calabresa, batata, ovo e carne de sol)</p>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Petisco Misto',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Frango à Passarinho</h3>
+<p style="font-size:12px;">(acompanha fritas)</p>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Frango à Passarinho',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Filé Mignon com Fritas</h3>
+<p style="font-size:12px;">(ao molho madeira)</p>
+<div class="price">R$ 60,00</div>
+<button onclick="addItem('Filé Mignon com Fritas',60)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Isca de Peixe com Fritas</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Isca de Peixe com Fritas',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Camarão Empanado com Fritas</h3>
+<div class="price">R$ 65,00</div>
+<button onclick="addItem('Camarão Empanado com Fritas',65)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Porção de Asas</h3>
+<div class="price">R$ 35,00</div>
+<button onclick="addItem('Porção de Asas',35)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Queijo Coalho à Milanesa</h3>
+<div class="price">R$ 35,00</div>
+<button onclick="addItem('Queijo Coalho à Milanesa',35)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Isca de Frango</h3>
+<div class="price">R$ 35,00</div>
+<button onclick="addItem('Isca de Frango',35)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+
+<div class="categoria-box" id="pratos">
+
+
+<h1 class="categoria">🍝 Pratos</h1>
+
+<h2>Massas</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Lasanha de Carne (P)</h3>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Lasanha de Carne P',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha de Carne (M)</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Lasanha de Carne M',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha de Frango (P)</h3>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Lasanha de Frango P',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha de Frango (M)</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Lasanha de Frango M',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha de Presunto (P)</h3>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Lasanha de Presunto P',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha de Presunto (M)</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Lasanha de Presunto M',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha Quatro Queijos (P)</h3>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Lasanha Quatro Queijos P',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Lasanha Quatro Queijos (M)</h3>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Lasanha Quatro Queijos M',55)">Adicionar</button>
+</div>
+
+</div>
+
+
+
+<h2>Parmegiana</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Filé à Parmegiana (P)</h3>
+<p style="font-size:12px;color:#aaa;">Acompanha queijo e espaguete</p>
+<div class="price">R$ 45,00</div>
+<button onclick="addItem('Parmegiana P',45)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Filé à Parmegiana (M)</h3>
+<p style="font-size:12px;color:#aaa;">Acompanha queijo e espaguete</p>
+<div class="price">R$ 55,00</div>
+<button onclick="addItem('Parmegiana M',55)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Filé à Parmegiana (G)</h3>
+<p style="font-size:12px;color:#aaa;">Acompanha queijo e espaguete</p>
+<div class="price">R$ 100,00</div>
+<button onclick="addItem('Parmegiana G',100)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+
+<div class="categoria-box" id="Caldos">
+
+
+<h1 class="categoria"> 🥣 Caldos</h1>
+
+<h2>Caldos</h2>
+<div class="grid">
+<div class="card"><h3>Caldo de Camarão</h3><div class="price">R$ 23,00</div><button onclick="addItem('Caldo de Camarão',23)">Adicionar</button></div>
+<div class="card"><h3>Vaca Atolada</h3><div class="price">R$ 19,00</div><button onclick="addItem('Vaca Atolada',19)">Adicionar</button></div>
+<div class="card"><h3>Mocotó</h3><div class="price">R$ 19,00</div><button onclick="addItem('Mocotó',19)">Adicionar</button></div>
+</div>
+</div>
+
+<div class="categoria-box" id="Sucos">
+
+<h1 class="categoria">🥤 Sucos</h1>
+
+<h2>Sucos</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Suco Graviola</h3>
+<div class="price">R$ 9,00</div>
+<button onclick="addItem('Suco Graviola',9)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Suco Cajá</h3>
+<div class="price">R$ 9,00</div>
+<button onclick="addItem('Suco Cajá',9)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Suco Uva</h3>
+<div class="price">R$ 9,00</div>
+<button onclick="addItem('Suco Uva',9)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Suco Limão</h3>
+<div class="price">R$ 10,00</div>
+<button onclick="addItem('Suco Limão',10)">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>Suco Laranja</h3>
+<div class="price">R$ 10,00</div>
+<button onclick="addItem('Suco Laranja',10)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+
+<div class="categoria-box" id="Cervejas">
+
+
+<h1 class="categoria"> 🍺 Cervejas</h1>
+
+<h2>Cervejas</h2>
+<div class="grid">
+<div class="card"><h3>Cerveja Lata</h3><div class="price">R$ 6,00</div><button onclick="addItem('Cerveja Lata',6)">Adicionar</button></div>
+<div class="card"><h3>Long Neck</h3><div class="price">R$ 12,00</div><button onclick="addItem('Cerveja Long Neck',12)">Adicionar</button></div>
+<div class="card"><h3>Sem Álcool</h3><div class="price">R$ 12,00</div><button onclick="addItem('Cerveja Sem Álcool',12)">Adicionar</button></div>
+<div class="card"><h3>Cerveja 600ml</h3><p>Devassa/Brahma</p><div class="price">R$ 13,00</div><button onclick="abrirModalOpcoes('Cerveja 600ml',13,['Devassa','Brahma'])">Escolher Opção</button></div>
+<div class="card"><h3>Cerveja 600ml</h3><p>Spaten, Budwiser, Stella</p><div class="price">R$ 15,00</div><button onclick="abrirModalOpcoes('Cerveja 600ml',15,['Spaten','Budwiser','Stella'])">Escolher Opção</button></div>
+<div class="card"><h3>Heineken 600ml</h3><div class="price">R$ 18,00</div><button onclick="addItem('Heineken 600ml',18)">Adicionar</button></div>
+</div>
+</div>
+
+
+
+
+<div class="categoria-box" id="bebidas">
+
+
+<h1 class="categoria"> 🥤 Bebidas</h1>
+
+<h2>Bebidas</h2>
+<div class="grid">
+
+<!-- LATAS -->
+<div class="card"><h3>Coca-Cola (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Coca-Cola Lata',7)">Adicionar</button></div>
+
+<div class="card"><h3>Coca-Cola Zero (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Coca-Cola Zero Lata',7)">Adicionar</button></div>
+
+<div class="card"><h3>Fanta Uva (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Fanta Uva Lata',7)">Adicionar</button></div>
+
+<div class="card"><h3>Fanta Laranja (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Fanta Laranja Lata',7)">Adicionar</button></div>
+
+<div class="card"><h3>Guaraná (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Guaraná Lata',7)">Adicionar</button></div>
+
+<div class="card"><h3>Sprite (Lata)</h3><div class="price">R$ 7,00</div><button onclick="addItem('Sprite Lata',7)">Adicionar</button></div>
+
+
+<!-- 600ML -->
+<div class="card"><h3>Coca-Cola 600ml</h3><div class="price">R$ 9,00</div><button onclick="addItem('Coca-Cola 600ml',9)">Adicionar</button></div>
+
+<div class="card"><h3>Coca-Cola Zero 600ml</h3><div class="price">R$ 9,00</div><button onclick="addItem('Coca-Cola Zero 600ml',9)">Adicionar</button></div>
+
+<div class="card"><h3>Guaraná 600ml</h3><div class="price">R$ 9,00</div><button onclick="addItem('Guaraná 600ml',9)">Adicionar</button></div>
+
+
+<!-- 1L (ATUALIZADO) -->
+<div class="card"><h3>Coca-Cola 1L</h3><div class="price">R$ 12,00</div><button onclick="addItem('Coca-Cola 1L',12)">Adicionar</button></div>
+
+<div class="card"><h3>Pepsi 1L</h3><div class="price">R$ 12,00</div><button onclick="addItem('Pepsi 1L',12)">Adicionar</button></div>
+
+<div class="card"><h3>Guaraná 1L</h3><div class="price">R$ 12,00</div><button onclick="addItem('Guaraná 1L',12)">Adicionar</button></div>
+
+<div class="card"><h3>Fanta Laranja 1L</h3><div class="price">R$ 12,00</div><button onclick="addItem('Fanta Laranja 1L',12)">Adicionar</button></div>
+
+
+<!-- OUTROS -->
+<div class="card"><h3>Água Mineral</h3><div class="price">R$ 4,00</div><button onclick="addItem('Água Mineral',4)">Adicionar</button></div>
+
+<div class="card"><h3>Água com Gás</h3><div class="price">R$ 4,00</div><button onclick="addItem('Água com Gás',4)">Adicionar</button></div>
+
+<div class="card"><h3>Red Bull</h3><div class="price">R$ 14,00</div><button onclick="addItem('Red Bull',14)">Adicionar</button></div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div id="modalSabores" class="modal">
+<div class="modal-content">
+
+<h3 id="tituloModal"></h3>
+
+<div id="listaSabores" class="sabores-grid"></div>
+
+<button class="btn-main" onclick="confirmarSabores()">Confirmar</button>
+<button class="close-btn" onclick="fecharModal()">Fechar</button>
+
+</div>
+</div>
+
+
+<!-- BOTÃO FLUTUANTE CARRINHO -->
+<div class="cart-btn" onclick="toggleCart()">
+<span class="cart-icon">🛒</span>
+<span class="cart-label">Carrinho</span>
+<strong id="cartSubtotal">R$ 0,00</strong>
+<span id="count" class="cart-count">0</span>
+</div>
+
+<!-- CARRINHO -->
+<div id="cart" class="cart">
+
+<button class="close-btn" onclick="toggleCart()">Fechar</button>
+
+<h2>Seu Pedido</h2>
+
+<div id="items"></div>
+
+<div id="total" class="cart-total"></div>
+
+
+<!-- AÇÕES -->
+
+<div id="acoesCarrinho" class="cart-actions">
+
+<button class="btn-main continuar-btn" onclick="fecharCarrinho()">
+Continuar comprando
+</button>
+
+<button class="checkout-btn" onclick="abrirCheckout()">
+Fechar pedido
+</button>
+
+
+
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkoutBox" style="display:none;">
+
+<h2>Finalizar Pedido</h2>
+
+<input id="nome" placeholder="Seu nome" autocomplete="name">
+<input id="fone" placeholder="Telefone" type="tel" autocomplete="tel">
+
+<select id="tipo" onchange="showEndereco()">
+<option value="Delivery">Delivery</option>
+<option value="Retirada">Retirada</option>
+</select>
+
+<div id="enderecoBox">
+
+<select id="bairro">
+<option value="">Selecione seu bairro</option>
+
+<option>Alecrim</option>
+<option>Bairro Nazaré</option>
+<option>Bairro Nordeste</option>
+<option>Barro Vermelho</option>
+<option>Bom Pastor</option>
+<option>Candelária</option>
+<option>Capim Macio</option>
+<option>Cidade Alta</option>
+<option>Cidade Esperança</option>
+<option>Cidade Nova</option>
+<option>Cidade Satélite</option>
+<option>Dix-Sept Rosado</option>
+<option>Felipe Camarão</option>
+<option>Jardim América</option>
+<option>Lagoa Nova</option>
+<option>Lagoa Seca</option>
+<option>Mãe Luiza</option>
+<option>Neópolis</option>
+<option>Parnamirim</option>
+<option>Petrópolis</option>
+<option>Pitimbu</option>
+<option>Planalto</option>
+<option>Ponta Negra</option>
+<option>Potilândia</option>
+<option>Praia do Meio</option>
+<option>Quintas</option>
+<option>Ribeira</option>
+<option>Rocas</option>
+<option>Tirol</option>
+
+<option>Outro</option>
+</select>
+
+<div id="taxaAviso" class="taxa-aviso">Selecione o bairro para ver a taxa de entrega.</div>
+
+<input id="endereco" placeholder="Endereço">
+<input id="referencia" placeholder="Referência">
+
+</div>
+
+<select id="pagamento">
+<option>Pix</option>
+<option>Cartão</option>
+<option>Dinheiro</option>
+</select>
+
+<div id="trocoBox" class="troco-box" style="display:none;">
+<input id="troco" placeholder="Troco para quanto?">
+</div>
+
+<textarea id="observacao" placeholder="Observação (opcional)"></textarea>
+
+<div class="cart-actions">
+<button onclick="voltarCarrinho()">Voltar</button>
+<button class="checkout-btn" onclick="enviarPedido()">Finalizar Pedido</button>
+</div>
+
+</div>
+
+</div> <!-- FECHA CART -->
+
+<nav class="mobile-bottom-nav" aria-label="Atalhos rápidos">
+  <button onclick="voltarMenuInicial()">Menu</button>
+  <button onclick="mostrarCategoria('pasteis', document.querySelector('[data-categoria-btn=pasteis]'))">Cardápio</button>
+  <button onclick="toggleCart()">Carrinho <span id="bottomCount">0</span></button>
+  <a href="https://wa.me/5584987415810" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="https://www.instagram.com/bardopastelnatalrn/" target="_blank" rel="noopener">Instagram</a>
+</nav>
+</div> <!-- FECHA CARDÁPIO -->
+
+
+
+
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
