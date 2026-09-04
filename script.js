@@ -80,7 +80,10 @@ function salvarCarrinho() {
 }
 
 function formatarMoeda(valor) {
-  return `R$ ${valor.toFixed(2)}`;
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  }).format(valor);
 }
 
 function limparBuscaCardapio() {
@@ -456,61 +459,74 @@ function montarMensagemPedido(dados, pedido) {
   const data = agora.toLocaleDateString("pt-BR");
   const horaAtual = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 
-  let msg = `Pedido Bar do Pastel
+  let msg = `🍴 *NOVO PEDIDO — BAR DO PASTEL*
+━━━━━━━━━━━━━━━━━━
+📅 ${data} às ${horaAtual}
+${dados.tipo === "Delivery" ? "🛵" : "🏪"} *Tipo:* ${dados.tipo}
 
-Data: ${data}
-Hora: ${horaAtual}
-
-Tipo de serviço: ${dados.tipo}
-
-Nome: ${dados.nome}
-Telefone: ${dados.fone}
-`;
+👤 *CLIENTE*
+*Nome:* ${dados.nome}
+*Telefone:* ${dados.fone}`;
 
   if (dados.tipo === "Delivery") {
     msg += `
-Bairro: ${dados.bairro}
-Endereço: ${dados.endereco}
-`;
+
+📍 *ENTREGA*
+*Bairro:* ${dados.bairro}
+*Endereço:* ${dados.endereco}`;
 
     if (dados.referencia) {
-      msg += `Referência: ${dados.referencia}
-`;
+      msg += `
+*Referência:* ${dados.referencia}`;
     }
 
     msg += dados.bairro === "Outro"
-      ? "Taxa de entrega: A confirmar\n"
-      : `Taxa de entrega: ${formatarMoeda(pedido.taxa)}\n`;
+      ? "\n*Taxa de entrega:* A confirmar"
+      : `\n*Taxa de entrega:* ${formatarMoeda(pedido.taxa)}`;
   }
 
   msg += `
-Produtos:
+
+🛒 *PRODUTOS*
 `;
 
   cart.forEach(item => {
     const sub = item.preco * item.qtd;
-    msg += `${item.nome} x${item.qtd} - ${formatarMoeda(sub)}
+    msg += `• ${item.qtd}x ${item.nome} — *${formatarMoeda(sub)}*
 `;
   });
 
   if (dados.observacao) {
     msg += `
-Observação: ${dados.observacao}
+📝 *OBSERVAÇÃO*
+${dados.observacao}
 `;
   }
 
   msg += `
-Total: ${formatarMoeda(pedido.total)}
+💰 *RESUMO DO PEDIDO*
+*Subtotal:* ${formatarMoeda(pedido.subtotal)}`;
 
-Pagamento: ${dados.pagamento}
-`;
-
-  if (dados.pagamento === "Dinheiro") {
-    msg += `Troco: ${dados.troco || "Não informado"}
-`;
+  if (dados.tipo === "Delivery") {
+    msg += dados.bairro === "Outro"
+      ? "\n*Entrega:* A confirmar"
+      : `\n*Entrega:* ${formatarMoeda(pedido.taxa)}`;
   }
 
-  return msg;
+  msg += `
+*TOTAL: ${formatarMoeda(pedido.total)}*
+
+💳 *PAGAMENTO*
+*Forma:* ${dados.pagamento}`;
+
+  if (dados.pagamento === "Dinheiro") {
+    msg += `
+*Troco para:* ${dados.troco || "Não informado"}`;
+  }
+
+  return `${msg}
+━━━━━━━━━━━━━━━━━━
+✅ Pedido enviado pelo cardápio online`;
 }
 
 function enviarParaImpressao(dados, pedido) {
