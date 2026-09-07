@@ -4,6 +4,10 @@ const OPEN_MINUTES = (17 * 60) + 40;
 const CLOSE_MINUTES = (23 * 60) + 20;
 const CLOSED_WEEKDAY = 1; // Segunda-feira.
 
+let configuracaoLoja = {
+  datasAbertasExcepcionalmente: []
+};
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const taxas = {
@@ -46,7 +50,8 @@ let nomeAtual = "";
 let precoAtual = 0;
 let textoModalAtual = "sabores";
 
-window.onload = () => {
+window.onload = async () => {
+  await carregarConfiguracaoLoja();
   renderCart();
   verificarHorario();
   showEndereco();
@@ -99,11 +104,33 @@ function normalizarTexto(texto) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+async function carregarConfiguracaoLoja() {
+  try {
+    const resposta = await fetch("config.json", { cache: "no-store" });
+    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+
+    const configuracao = await resposta.json();
+    if (Array.isArray(configuracao.datasAbertasExcepcionalmente)) {
+      configuracaoLoja.datasAbertasExcepcionalmente = configuracao.datasAbertasExcepcionalmente;
+    }
+  } catch (erro) {
+    console.warn("Não foi possível carregar as exceções de funcionamento.", erro);
+  }
+}
+
+function formatarDataISO(data) {
+  const ano = data.getFullYear();
+  const mes = String(data.getMonth() + 1).padStart(2, "0");
+  const dia = String(data.getDate()).padStart(2, "0");
+  return `${ano}-${mes}-${dia}`;
+}
+
 function getHorarioFuncionamento(agora = new Date()) {
   const dia = agora.getDay();
   const minutos = (agora.getHours() * 60) + agora.getMinutes();
+  const aberturaExcepcional = configuracaoLoja.datasAbertasExcepcionalmente.includes(formatarDataISO(agora));
 
-  if (dia === CLOSED_WEEKDAY) {
+  if (dia === CLOSED_WEEKDAY && !aberturaExcepcional) {
     return {
       aberto: false,
       motivo: "Segunda-feira é nossa folga.",
@@ -454,24 +481,90 @@ function getDadosCheckout() {
   };
 }
 
+function navegadorSuportaEmojis() {
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = 64;
+    canvas.height = 48;
+
+    const contexto = canvas.getContext("2d");
+    if (!contexto) return false;
+
+    contexto.font = '32px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
+    contexto.textBaseline = "top";
+
+    const assinatura = texto => {
+      contexto.clearRect(0, 0, canvas.width, canvas.height);
+      contexto.fillText(texto, 4, 4);
+      const pixels = contexto.getImageData(0, 0, canvas.width, canvas.height).data;
+      let hash = 0;
+
+      for (let i = 0; i < pixels.length; i++) {
+        hash = ((hash * 31) + pixels[i]) >>> 0;
+      }
+
+      return hash;
+    };
+
+    const calendario = "\uD83D\uDCC5";
+    const caractereSemGlifo = "\uDBFF\uDFFF";
+    return assinatura(calendario) !== assinatura(caractereSemGlifo);
+  } catch (erro) {
+    return false;
+  }
+}
+
+function getIconesMensagem(usarEmojis = navegadorSuportaEmojis()) {
+  if (!usarEmojis) {
+    return {
+      pedido: "◆",
+      data: "◆",
+      delivery: "◆",
+      retirada: "◆",
+      cliente: "◆",
+      entrega: "◆",
+      produtos: "◆",
+      observacao: "◆",
+      resumo: "◆",
+      pagamento: "◆",
+      concluido: "✓"
+    };
+  }
+
+  return {
+    pedido: "\uD83C\uDF74",
+    data: "\uD83D\uDCC5",
+    delivery: "\uD83D\uDEF5",
+    retirada: "\uD83C\uDFEA",
+    cliente: "\uD83D\uDC64",
+    entrega: "\uD83D\uDCCD",
+    produtos: "\uD83D\uDED2",
+    observacao: "\uD83D\uDCDD",
+    resumo: "\uD83D\uDCB0",
+    pagamento: "\uD83D\uDCB3",
+    concluido: "\u2705"
+  };
+}
+
 function montarMensagemPedido(dados, pedido) {
   const agora = new Date();
   const data = agora.toLocaleDateString("pt-BR");
   const horaAtual = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  const icones = getIconesMensagem();
 
-  let msg = `🍴 *NOVO PEDIDO — BAR DO PASTEL*
+  let msg = `${icones.pedido} *NOVO PEDIDO — BAR DO PASTEL*
 ━━━━━━━━━━━━━━━━━━
-📅 ${data} às ${horaAtual}
-${dados.tipo === "Delivery" ? "🛵" : "🏪"} *Tipo:* ${dados.tipo}
+${icones.data} ${data} às ${horaAtual}
+${dados.tipo === "Delivery" ? icones.delivery : icones.retirada} *Tipo:* ${dados.tipo}
 
-👤 *CLIENTE*
+${icones.cliente} *CLIENTE*
 *Nome:* ${dados.nome}
 *Telefone:* ${dados.fone}`;
 
   if (dados.tipo === "Delivery") {
     msg += `
 
-📍 *ENTREGA*
+${icones.entrega} *ENTREGA*
 *Bairro:* ${dados.bairro}
 *Endereço:* ${dados.endereco}`;
 
@@ -487,7 +580,7 @@ ${dados.tipo === "Delivery" ? "🛵" : "🏪"} *Tipo:* ${dados.tipo}
 
   msg += `
 
-🛒 *PRODUTOS*
+${icones.produtos} *PRODUTOS*
 `;
 
   cart.forEach(item => {
@@ -498,13 +591,13 @@ ${dados.tipo === "Delivery" ? "🛵" : "🏪"} *Tipo:* ${dados.tipo}
 
   if (dados.observacao) {
     msg += `
-📝 *OBSERVAÇÃO*
+${icones.observacao} *OBSERVAÇÃO*
 ${dados.observacao}
 `;
   }
 
   msg += `
-💰 *RESUMO DO PEDIDO*
+${icones.resumo} *RESUMO DO PEDIDO*
 *Subtotal:* ${formatarMoeda(pedido.subtotal)}`;
 
   if (dados.tipo === "Delivery") {
@@ -516,7 +609,7 @@ ${dados.observacao}
   msg += `
 *TOTAL: ${formatarMoeda(pedido.total)}*
 
-💳 *PAGAMENTO*
+${icones.pagamento} *PAGAMENTO*
 *Forma:* ${dados.pagamento}`;
 
   if (dados.pagamento === "Dinheiro") {
@@ -526,7 +619,7 @@ ${dados.observacao}
 
   return `${msg}
 ━━━━━━━━━━━━━━━━━━
-✅ Pedido enviado pelo cardápio online`;
+${icones.concluido} Pedido enviado pelo cardápio online`;
 }
 
 function enviarParaImpressao(dados, pedido) {
